@@ -1,15 +1,15 @@
 import { useContext, useState } from 'react';
 import { TodosContext } from './TodosContext';
 
-const TodoForm=()=>{
+const TodoForm = () => {
   const { addTodo } = useContext(TodosContext);
   const [newTodo, setNewTodo] = useState('');
-  
-  const handleNewTodo =(e)=>{
+
+  const handleNewTodo = (e) => {
     setNewTodo(e.target.value);
   };
 
-  const submitNewTodo =(e)=>{
+  const submitNewTodo = (e) => {
     e.preventDefault();
     addTodo(newTodo);
     setNewTodo('');
@@ -18,7 +18,7 @@ const TodoForm=()=>{
   return (
     <form onSubmit={submitNewTodo}>
       <label htmlFor='newTodo'>New Todo</label>
-      <input type='text' value={newTodo} onChange={handleNewTodo}/>
+      <input type='text' value={newTodo} onChange={handleNewTodo} />
       <button>Add Todo</button>
     </form>
   );

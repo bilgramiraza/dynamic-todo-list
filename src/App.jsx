@@ -10,7 +10,8 @@ function App() {
         <TodoList />
         <TodoForm />
       </TodosProvider>
-    </main>);
+    </main>
+  );
 }
 
 export default App
