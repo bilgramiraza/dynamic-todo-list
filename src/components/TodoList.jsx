@@ -6,8 +6,8 @@ const TodoList=({todos, handleToggle, removeTodo})=>{
   return (
     <div>
       <ul>
-        {todos.map((todo,i)=>
-          <TodoItem key={i} todo={todo} toggleStatus={()=>handleToggle(i)} removeTodo={()=>removeTodo(i)} />
+        {todos.map(todo=>
+          <TodoItem key={todo.id} todo={todo} toggleStatus={()=>handleToggle(todo.id)} removeTodo={()=>removeTodo(todo.id)} />
         )}
       </ul>
   </div>);

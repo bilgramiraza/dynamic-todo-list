@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { nanoid } from "nanoid";
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
 
@@ -6,17 +7,16 @@ function App() {
   const [todos, setTodos]= useState([]);
 
   const addTodo=(todo)=>{
-    setTodos([...todos,{todo, status:false}]);
+    setTodos([...todos,{id:nanoid(), todo, status:false}]);
   };
 
-  const toggleStatus =(index)=>{
-    const newTodos = todos.map((todo,i)=>i===index?{...todo,status:!todo.status}:todo);
+  const toggleStatus =(id)=>{
+    const newTodos = todos.map((todo)=>id===todo.id?{...todo,status:!todo.status}:todo);
     setTodos(newTodos);
   };
 
-  const removeTodo =(index)=>{
-    const newTodos = [...todos];
-    newTodos.splice(index,1);
+  const removeTodo =(id)=>{
+    const newTodos = todos.filter(todo=>id!==todo.id);
     setTodos(newTodos);
   };
 
