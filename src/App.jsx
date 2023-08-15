@@ -14,10 +14,16 @@ function App() {
     setTodos(newTodos);
   };
 
+  const removeTodo =(index)=>{
+    const newTodos = [...todos];
+    newTodos.splice(index,1);
+    setTodos(newTodos);
+  };
+
   return (
     <main>
       <h1>Dynamic Todo List</h1>
-      <TodoList todos={todos} handleToggle={toggleStatus}/>
+      <TodoList todos={todos} handleToggle={toggleStatus} removeTodo={removeTodo}/>
       <TodoForm addTodo={addTodo}/>
     </main>);
 }
