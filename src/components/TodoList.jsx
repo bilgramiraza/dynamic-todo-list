@@ -1,23 +1,18 @@
-import PropTypes from 'prop-types';
+import { useContext } from 'react';
 import TodoItem from './TodoItem';
+import { TodosContext } from './TodosContext';
 
-const TodoList=({todos, handleToggle, removeTodo})=>{
+const TodoList=()=>{
+  const { todos }= useContext(TodosContext);
 
   return (
     <div>
       <ul>
         {todos.map(todo=>
-          <TodoItem key={todo.id} todo={todo} toggleStatus={()=>handleToggle(todo.id)} removeTodo={()=>removeTodo(todo.id)} />
+          <TodoItem key={todo.id} todo={todo} />
         )}
       </ul>
   </div>);
 };
 
 export default TodoList;
-
-
-TodoList.propTypes = {
-  todos:PropTypes.array,
-  handleToggle: PropTypes.func.isRequired,
-  removeTodo: PropTypes.func.isRequired,
-};
