@@ -7,7 +7,7 @@ const TodoItem=({todo})=>{
 
   return (
     <li>
-      <span>{todo.todo}</span>
+      <span>{todo.title}</span>
       <input type='checkbox' value={todo.status} onClick={()=>toggleStatus(todo.id)} />
       <button onClick={()=>removeTodo(todo.id)}>Delete</button>
     </li>

@@ -1,6 +1,6 @@
-import { nanoid } from "nanoid";
-import { createContext ,useState  } from "react";
+import { createContext, useReducer } from "react";
 import PropTypes from 'prop-types';
+import todoReducer from "./todoReducer";
 
 const TodosContext = createContext({
   todos:[],
@@ -10,20 +10,18 @@ const TodosContext = createContext({
 });
 
 const TodosProvider =({ children })=>{
-  const [todos, setTodos]= useState([]);
+  const [todos, dispatch]= useReducer(todoReducer,[]);
 
-  const addTodo=(todo)=>{
-    setTodos([...todos,{id:nanoid(), todo, status:false}]);
+  const addTodo=(title)=>{
+    dispatch({type:"ADD_TODO",payload:{title}});
   };
 
   const toggleStatus =(id)=>{
-    const newTodos = todos.map((todo)=>id===todo.id?{...todo,status:!todo.status}:todo);
-    setTodos(newTodos);
+    dispatch({type:"TOGGLE_STATUS",payload:{id}});
   };
 
   const removeTodo =(id)=>{
-    const newTodos = todos.filter(todo=>id!==todo.id);
-    setTodos(newTodos);
+    dispatch({type:"REMOVE_TODO",payload:{id}});
   };
 
   return (
