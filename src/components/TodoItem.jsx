@@ -39,7 +39,7 @@ const TodoItem = ({ todo }) => {
   return (
     <li>
       {todoDiv}
-      <input type='checkbox' value={todo.status} onClick={() => toggleStatus(todo.id)} />
+      <input type='checkbox' checked={todo.status} onClick={() => toggleStatus(todo.id)} />
       <button onClick={() => removeTodo(todo.id)}>Delete</button>
       <button onClick={() => setEditMode(!editMode)}>Edit</button>
     </li>
