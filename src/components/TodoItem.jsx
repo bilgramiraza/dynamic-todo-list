@@ -2,27 +2,27 @@ import PropTypes from 'prop-types';
 import { TodosContext } from './TodosContext';
 import { useContext, useState } from 'react';
 
-const EditItem =({ handleEdit, oldTitle})=>{
+const EditItem = ({ handleEdit, oldTitle }) => {
   const [title, setTitle] = useState(oldTitle);
 
-  const handleChange =(e)=>{
+  const handleChange = (e) => {
     setTitle(e.target.value);
   };
 
-  const handleSubmit =(e)=>{
+  const handleSubmit = (e) => {
     e.preventDefault();
     handleEdit(title);
   };
 
-  const handleCancel =(e)=>{
+  const handleCancel = (e) => {
     e.preventDefault();
     handleEdit(oldTitle);
   };
-  
+
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        <input type='text' value={title} onChange={handleChange}/> 
+        <input type='text' value={title} onChange={handleChange} />
       </label>
       <button>Submit</button>
       <button type='button' onClick={handleCancel}>Cancel</button>
@@ -31,15 +31,15 @@ const EditItem =({ handleEdit, oldTitle})=>{
 };
 
 const TodoItem = ({ todo }) => {
-  const { toggleStatus, removeTodo, editTodo} = useContext(TodosContext);
+  const { toggleStatus, removeTodo, editTodo } = useContext(TodosContext);
   const [editMode, setEditMode] = useState(false);
 
-  const handleEdit =(title)=>{
-    editTodo(todo.id,title);
+  const handleEdit = (title) => {
+    editTodo(todo.id, title);
     setEditMode(!editMode);
   };
 
-  const todoDiv = editMode ? <EditItem handleEdit={handleEdit} oldTitle={todo.title}/> : <span>{todo.title}</span>;
+  const todoDiv = editMode ? <EditItem handleEdit={handleEdit} oldTitle={todo.title} /> : <span>{todo.title}</span>;
 
   return (
     <li>
