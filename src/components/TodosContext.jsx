@@ -7,6 +7,7 @@ const TodosContext = createContext({
   addTodo: () => { },
   removeTodo: () => { },
   toggleStatus: () => { },
+  editTodo: () => { },
 });
 
 const TodosProvider = ({ children }) => {
@@ -24,8 +25,12 @@ const TodosProvider = ({ children }) => {
     dispatch({ type: "REMOVE_TODO", payload: { id } });
   };
 
+  const editTodo = (id, title) => {
+    dispatch({ type: "EDIT_TODO", payload: { id, title} });
+  };
+
   return (
-    <TodosContext.Provider value={{ todos, addTodo, removeTodo, toggleStatus }}>
+    <TodosContext.Provider value={{ todos, addTodo, removeTodo, toggleStatus, editTodo}}>
       {children}
     </TodosContext.Provider>
   );

@@ -1,15 +1,47 @@
 import PropTypes from 'prop-types';
 import { TodosContext } from './TodosContext';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+
+const EditItem =({ handleEdit })=>{
+  const [title, setTitle] = useState('');
+
+  const handleChange =(e)=>{
+    setTitle(e.target.value);
+  };
+
+  const handleSubmit =(e)=>{
+    e.preventDefault();
+    handleEdit(title);
+    setTitle('');
+  };
+  
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        <input type='text' value={title} onChange={handleChange}/> 
+      </label>
+      <button>Submit</button>
+    </form>
+  );
+};
 
 const TodoItem = ({ todo }) => {
-  const { toggleStatus, removeTodo } = useContext(TodosContext);
+  const { toggleStatus, removeTodo, editTodo} = useContext(TodosContext);
+  const [editMode, setEditMode] = useState(false);
+
+  const handleEdit =(title)=>{
+    editTodo(todo.id,title);
+    setEditMode(!editMode);
+  };
+
+  const todoDiv = editMode ? <EditItem handleEdit={handleEdit} /> : <span>{todo.title}</span>;
 
   return (
     <li>
-      <span>{todo.title}</span>
+      {todoDiv}
       <input type='checkbox' value={todo.status} onClick={() => toggleStatus(todo.id)} />
       <button onClick={() => removeTodo(todo.id)}>Delete</button>
+      <button onClick={() => setEditMode(!editMode)}>Edit</button>
     </li>
   );
 };
@@ -19,4 +51,8 @@ export default TodoItem;
 
 TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
+};
+
+EditItem.propTypes = {
+  handleEdit: PropTypes.func.isRequired,
 };

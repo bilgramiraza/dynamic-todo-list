@@ -8,6 +8,8 @@ const todoReducer = (state, action) => {
       return state.filter(todo => action.payload.id !== todo.id);
     case "TOGGLE_STATUS":
       return state.map(todo => action.payload.id === todo.id ? { ...todo, status: !todo.status } : todo);
+    case "EDIT_TODO":
+      return state.map(todo => action.payload.id === todo.id ? { ...todo, title: action.payload.title } : todo);
     default:
       return state;
   }
