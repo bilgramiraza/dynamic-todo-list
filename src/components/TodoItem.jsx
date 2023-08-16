@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import { TodosContext } from './TodosContext';
 import { useContext, useState } from 'react';
 
-const EditItem =({ handleEdit })=>{
-  const [title, setTitle] = useState('');
+const EditItem =({ handleEdit, oldTitle})=>{
+  const [title, setTitle] = useState(oldTitle);
 
   const handleChange =(e)=>{
     setTitle(e.target.value);
@@ -12,7 +12,11 @@ const EditItem =({ handleEdit })=>{
   const handleSubmit =(e)=>{
     e.preventDefault();
     handleEdit(title);
-    setTitle('');
+  };
+
+  const handleCancel =(e)=>{
+    e.preventDefault();
+    handleEdit(oldTitle);
   };
   
   return (
@@ -21,6 +25,7 @@ const EditItem =({ handleEdit })=>{
         <input type='text' value={title} onChange={handleChange}/> 
       </label>
       <button>Submit</button>
+      <button type='button' onClick={handleCancel}>Cancel</button>
     </form>
   );
 };
@@ -34,7 +39,7 @@ const TodoItem = ({ todo }) => {
     setEditMode(!editMode);
   };
 
-  const todoDiv = editMode ? <EditItem handleEdit={handleEdit} /> : <span>{todo.title}</span>;
+  const todoDiv = editMode ? <EditItem handleEdit={handleEdit} oldTitle={todo.title}/> : <span>{todo.title}</span>;
 
   return (
     <li>
@@ -55,4 +60,5 @@ TodoItem.propTypes = {
 
 EditItem.propTypes = {
   handleEdit: PropTypes.func.isRequired,
+  oldTitle: PropTypes.string.isRequired,
 };
