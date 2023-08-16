@@ -5,21 +5,25 @@ import { TodosContext } from './TodosContext';
 const TodoList = () => {
   const { todos } = useContext(TodosContext);
 
-  const [filter, setFilter]= useState('All');//States: All|Active|Completed
+  const [filter, setFilter] = useState('All');//States: All|Active|Completed
+
+  const filteredTodos = todos.filter(todo => {
+    if (filter === 'Active' && !todo.status) return todo;
+    if (filter === 'Completed' && todo.status) return todo;
+    if (filter === 'All') return todo;
+  });
 
   return (
     <div>
       <div>
-        <button onClick={()=>setFilter('All')}>All</button>
-        <button onClick={()=>setFilter('Active')}>Active</button>
-        <button onClick={()=>setFilter('Completed')}>Completed</button>
+        <button onClick={() => setFilter('All')}>All</button>
+        <button onClick={() => setFilter('Active')}>Active</button>
+        <button onClick={() => setFilter('Completed')}>Completed</button>
       </div>
       <ul>
-        {todos.map(todo =>{
-          if((filter==='Active' && !todo.status)||(filter==='Completed' && todo.status)) return ;
-
-          return <TodoItem key={todo.id} todo={todo} />;
-        })}
+        {
+          filteredTodos.map(todo => <TodoItem key={todo.id} todo={todo} />)
+        }
       </ul>
     </div>);
 };
