@@ -4,13 +4,13 @@ import { TodosProvider } from "./components/TodosContext";
 
 function App() {
   return (
-    <main>
-      <h1>Dynamic Todo List</h1>
-      <TodosProvider>
-        <TodoList />
-        <TodoForm />
-      </TodosProvider>
-    </main>
+    <TodosProvider>
+      <header>
+        <h1 className="">Dynamic Todo List</h1>
+      </header>
+      <TodoForm />
+      <TodoList />
+    </TodosProvider>
   );
 }
 

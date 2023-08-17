@@ -14,7 +14,7 @@ const TodoList = () => {
   });
 
   return (
-    <div>
+    <section>
       <div>
         <button onClick={() => setFilter('All')}>All</button>
         <button onClick={() => setFilter('Active')}>Active</button>
@@ -25,7 +25,7 @@ const TodoList = () => {
           filteredTodos.map(todo => <TodoItem key={todo.id} todo={todo} />)
         }
       </ul>
-    </div>);
+    </section>);
 };
 
 export default TodoList;

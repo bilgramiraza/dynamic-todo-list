@@ -16,13 +16,15 @@ const TodoForm = () => {
   };
 
   return (
-    <form onSubmit={submitNewTodo}>
-      <label>
-        New Todo: 
-        <input type='text' value={newTodo} onChange={handleNewTodo} />
-      </label>
-      <button>Add Todo</button>
-    </form>
+    <section>
+      <form onSubmit={submitNewTodo}>
+        <label>
+          New Todo: 
+          <input type='text' value={newTodo} onChange={handleNewTodo} />
+        </label>
+        <button>Add Todo</button>
+      </form>
+    </section>
   );
 };
 
