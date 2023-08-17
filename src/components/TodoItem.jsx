@@ -22,7 +22,7 @@ const EditItem = ({ handleEdit, oldTitle }) => {
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        <input type='text' value={title} onChange={handleChange} />
+        <input type='text' value={title} onChange={handleChange} autoFocus/>
       </label>
       <button>Submit</button>
       <button type='button' onClick={handleCancel}>Cancel</button>
@@ -43,8 +43,10 @@ const TodoItem = ({ todo }) => {
 
   return (
     <li>
-      {todoDiv}
-      <input type='checkbox' checked={todo.status} onClick={() => toggleStatus(todo.id)} />
+      <label>
+        {todoDiv}
+        <input type='checkbox' checked={todo.status} onChange={() => toggleStatus(todo.id)} />
+      </label>
       <button onClick={() => removeTodo(todo.id)}>Delete</button>
       <button onClick={() => setEditMode(!editMode)}>Edit</button>
     </li>

@@ -17,8 +17,10 @@ const TodoForm = () => {
 
   return (
     <form onSubmit={submitNewTodo}>
-      <label htmlFor='newTodo'>New Todo</label>
-      <input type='text' value={newTodo} onChange={handleNewTodo} />
+      <label>
+        New Todo: 
+        <input type='text' value={newTodo} onChange={handleNewTodo} />
+      </label>
       <button>Add Todo</button>
     </form>
   );
