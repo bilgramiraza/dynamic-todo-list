@@ -14,13 +14,13 @@ const TodoList = () => {
   });
 
   return (
-    <section>
-      <div>
-        <button onClick={() => setFilter('All')}>All</button>
-        <button onClick={() => setFilter('Active')}>Active</button>
-        <button onClick={() => setFilter('Completed')}>Completed</button>
+    <section className='m-2'>
+      <div className='flex flex-row justify-evenly w-1/6 mb-3'>
+        <button className='border-2 border-black rounded-md px-3' onClick={() => setFilter('All')}>All</button>
+        <button className='border-2 border-black rounded-md px-3' onClick={() => setFilter('Active')}>Active</button>
+        <button className='border-2 border-black rounded-md px-3' onClick={() => setFilter('Completed')}>Completed</button>
       </div>
-      <ul>
+      <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3'>
         {
           filteredTodos.map(todo => <TodoItem key={todo.id} todo={todo} />)
         }
