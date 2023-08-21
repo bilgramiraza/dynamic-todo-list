@@ -14,13 +14,18 @@ const TodoList = () => {
   });
 
   return (
-    <section className='m-2'>
-      <div className='flex flex-row justify-evenly w-1/6 mb-3'>
-        <button className='border-2 border-black rounded-md px-3' onClick={() => setFilter('All')}>All</button>
-        <button className='border-2 border-black rounded-md px-3' onClick={() => setFilter('Active')}>Active</button>
-        <button className='border-2 border-black rounded-md px-3' onClick={() => setFilter('Completed')}>Completed</button>
+    <section className='mb-2 mx-3 flex flex-col'>
+      <div className='self-center flex flex-row justify-evenly w-1/3 mb-3 border-b-2 border-x-2 border-white rounded-md'>
+        <div className='p-2 border-r-2 border-white'>
+          <span className='mx-2 text-center text-md md:text-xl lg:text-2xl'>Display Mode</span>
+        </div>
+        <div className='p-2.5'>
+          <button className='border-2 border-black rounded-md px-3 mx-2' onClick={() => setFilter('All')}>All</button>
+          <button className='border-2 border-black rounded-md px-3 mx-2' onClick={() => setFilter('Active')}>Active</button>
+          <button className='border-2 border-black rounded-md px-3 mx-2' onClick={() => setFilter('Completed')}>Completed</button>
+        </div>
       </div>
-      <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3'>
+      <ul className='mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
         {
           filteredTodos.map(todo => <TodoItem key={todo.id} todo={todo} />)
         }

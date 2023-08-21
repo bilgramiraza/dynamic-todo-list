@@ -14,18 +14,14 @@ const EditItem = ({ handleEdit, oldTitle }) => {
     handleEdit(title);
   };
 
-  const handleCancel = (e) => {
-    e.preventDefault();
-    handleEdit(oldTitle);
-  };
-
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        <input type='text' value={title} onChange={handleChange} autoFocus/>
+    <form onSubmit={handleSubmit} className='px-2'>
+      <label className='mb-1'>
+        <input type='text' value={title} onChange={handleChange} autoFocus className='w-full pl-2 rounded-md'/>
       </label>
-      <button>Submit</button>
-      <button type='button' onClick={handleCancel}>Cancel</button>
+      <div className='flex flex-row justify-evenly mt-2'>
+        <button className='border-2 border-black rounded-md px-3 mx-2'>Submit</button>
+      </div>
     </form>
   );
 };
@@ -39,17 +35,20 @@ const TodoItem = ({ todo }) => {
     setEditMode(!editMode);
   };
 
-  const todoDiv = editMode ? <EditItem handleEdit={handleEdit} oldTitle={todo.title} /> : <span>{todo.title}</span>;
+  const todoDiv = editMode ? <EditItem handleEdit={handleEdit} oldTitle={todo.title} /> : <span className='p-2 text-3xl'>{todo.title}</span>;
 
   return (
     <li className='border-2 rounded-e flex flex-row justify-between'>
-      <label className='self-center p-2'>
-        {todoDiv}
-        <input type='checkbox' checked={todo.status} onChange={() => toggleStatus(todo.id)} />
+      <label className='w-1/5 border-r-2 border-white flex justify-center'>
+        <input type='checkbox' checked={todo.status} onChange={() => toggleStatus(todo.id)} className='appearance-none w-10 h-10 border-4 border-white checked:bg-white rounded-full my-auto'/>
       </label>
-      <div className='flex flex-col border-l-2'>
-        <button className='' onClick={() => removeTodo(todo.id)}>Delete</button>
-        <button className='' onClick={() => setEditMode(!editMode)}>Edit</button>
+      <div className='self-center w-3/5'> 
+        {todoDiv}
+      </div>
+      <div className='flex flex-col border-l-2 w-1/5'>
+        <button className='p-1.5 text-black' onClick={() => setEditMode(!editMode)}>{editMode?'Cancel':'Edit'}</button>
+        <hr className='border-1 border-white'/>
+        <button className='p-1.5 text-black' onClick={() => removeTodo(todo.id)}>Delete</button>
       </div>
     </li>
   );

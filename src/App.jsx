@@ -7,12 +7,12 @@ function App() {
     <TodosProvider>
       <div className="flex flex-col w-screen lg:flex-row h-screen">
         <div className="w-full lg:w-1/5 ">
-          <header className="text-center m-2 border-b-2 pb-5">
+          <header className="text-center my-2 border-b-2 py-3">
             <h1 className="text-3xl font-bold font-serif">Dynamic Todo List</h1>
           </header>
           <TodoForm />
         </div>
-        <div className="w-full lg:w-4/5">
+        <div className="border-l-2 border-white w-full lg:w-4/5">
           <TodoList />
         </div>
       </div>
