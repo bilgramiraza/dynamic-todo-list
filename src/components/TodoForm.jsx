@@ -20,7 +20,7 @@ const TodoForm = () => {
       <form onSubmit={submitNewTodo} className='flex flex-col justify-center h-full'>
         <label className='flex flex-col'>
           <span className='text-xl font-semibold ml-3 pb-1'>New Todo: </span>
-          <input type='text' value={newTodo} onChange={handleNewTodo} className='rounded-md text-black pl-3'/>
+          <input type='text' value={newTodo} onChange={handleNewTodo} className='rounded-md text-black pl-3 py-1'/>
         </label>
         <button className='mt-3 rounded-md border-2 border-black'>Add Todo</button>
       </form>

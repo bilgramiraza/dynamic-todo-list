@@ -42,13 +42,15 @@ const TodoItem = ({ todo }) => {
   const todoDiv = editMode ? <EditItem handleEdit={handleEdit} oldTitle={todo.title} /> : <span>{todo.title}</span>;
 
   return (
-    <li>
-      <label>
+    <li className='border-2 rounded-e flex flex-row justify-between'>
+      <label className='self-center p-2'>
         {todoDiv}
         <input type='checkbox' checked={todo.status} onChange={() => toggleStatus(todo.id)} />
       </label>
-      <button onClick={() => removeTodo(todo.id)}>Delete</button>
-      <button onClick={() => setEditMode(!editMode)}>Edit</button>
+      <div className='flex flex-col border-l-2'>
+        <button className='' onClick={() => removeTodo(todo.id)}>Delete</button>
+        <button className='' onClick={() => setEditMode(!editMode)}>Edit</button>
+      </div>
     </li>
   );
 };
