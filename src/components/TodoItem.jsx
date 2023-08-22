@@ -20,7 +20,7 @@ const EditItem = ({ handleEdit, oldTitle }) => {
         <input type='text' value={title} onChange={handleChange} autoFocus className='border-2 border-black dark:border-gray-300 w-full pl-2 rounded-md text-black dark:text-white dark:bg-slate-500'/>
       </label>
       <div className='flex flex-row justify-evenly mt-2'>
-        <button className='bg-green-700 hover:bg-green-500 dark:hover:bg-green-900 focus-visible:bg-green-500 dark:focus-visible:bg-green-900 text-white border-2 border-black rounded-md px-3 mx-2'>Submit</button>
+        <button className={`${title.length && 'bg-green-700 hover:bg-green-500 dark:hover:bg-green-900 focus-visible:bg-green-500 dark:focus-visible:bg-green-900'} text-white border-2 border-black rounded-md px-3 mx-2`} disabled={title.length===0}>Submit</button>
       </div>
     </form>
   );
