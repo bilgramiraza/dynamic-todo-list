@@ -39,5 +39,5 @@ const TodosProvider = ({ children }) => {
 export { TodosContext, TodosProvider };
 
 TodosProvider.propTypes = {
-  children: PropTypes.array,
+  children: PropTypes.object,
 };
