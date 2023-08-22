@@ -20,9 +20,9 @@ const TodoList = () => {
           <span className='self-center mx-1 text-center text-lg text-black dark:text-white font-semibold'>Display Mode</span>
         </div>
         <div className='justify-evenly p-2.5 flex flex-row flex-wrap lg:flex-nowrap lg:w-2/3'>
-          <button className='border-2 border-gray-500 rounded-md px-3 mx-1 mt-1 text-black dark:text-white' onClick={() => setFilter('All')}>All</button>
-          <button className='border-2 border-gray-500 rounded-md px-3 mx-1 mt-1 text-black dark:text-white' onClick={() => setFilter('Active')}>Active</button>
-          <button className='border-2 border-gray-500 rounded-md px-3 mx-1 mt-1 text-black dark:text-white' onClick={() => setFilter('Completed')}>Completed</button>
+          <button className={`border-2 border-gray-500 dark:border-gray-300 rounded-md px-3 mx-1 mt-1 text-black dark:text-white bg-cyan-100 dark:bg-slate-500 hover:bg-cyan-300 dark:hover:bg-slate-700 focus-visible:bg-cyan-300 dark:focus-visible:bg-slate-700 ${(filter==='All') && 'border-y-4 font-semibold'}`} onClick={() => setFilter('All')}>All</button>
+          <button className={`border-2 border-gray-500 dark:border-gray-300 rounded-md px-3 mx-1 mt-1 text-black dark:text-white bg-cyan-100 dark:bg-slate-500 hover:bg-cyan-300 dark:hover:bg-slate-700 focus-visible:bg-cyan-300 dark:focus-visible:bg-slate-700 ${(filter==='Active') && 'border-y-4 font-semibold'}`} onClick={() => setFilter('Active')}>Active</button>
+          <button className={`border-2 border-gray-500 dark:border-gray-300 rounded-md px-3 mx-1 mt-1 text-black dark:text-white bg-cyan-100 dark:bg-slate-500 hover:bg-cyan-300 dark:hover:bg-slate-700 focus-visible:bg-cyan-300 dark:focus-visible:bg-slate-700 ${(filter==='Completed') && 'border-y-4 font-semibold'}`} onClick={() => setFilter('Completed')}>Completed</button>
         </div>
       </div>
       <ul className='mt-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4'>
