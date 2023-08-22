@@ -16,13 +16,15 @@ const TodoForm = () => {
   };
 
   return (
-    <section className='m-2 h-1/6'>
-      <form onSubmit={submitNewTodo} className='flex flex-col justify-center h-full mx-2'>
+    <section className='mx-auto my-3 w-3/4'>
+      <form onSubmit={submitNewTodo} className='flex flex-col justify-center'>
         <label className='flex flex-col'>
-          <span className='text-xl font-semibold ml-3 pb-1'>New Todo: </span>
-          <input type='text' value={newTodo} onChange={handleNewTodo} className='rounded-md text-black pl-3 py-1 mt-2'/>
+          <span className='text-xl font-semibold ml-3 mb-1'>New Todo: </span>
+          <input type='text' value={newTodo} onChange={handleNewTodo} className='rounded-md text-black pl-3 py-1'/>
         </label>
-        <button className='mt-3 rounded-md border-2 border-black'>Add Todo</button>
+        <div className='mt-3 mx-auto'>
+          <button className='px-2 md:px-8 rounded-md border-2 border-black'>Add Todo</button>
+        </div>
       </form>
     </section>
   );
