@@ -20,7 +20,7 @@
     <a href="https://github.com/bilgramiraza/dynamic-todo-list"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/bilgramiraza/dynamic-todo-list">View Demo</a>
+    <a href="https://charming-flan-e9c0c7.netlify.app" target="_blank">View Demo</a>
     ·
     <a href="https://github.com/bilgramiraza/dynamic-todo-list/issues">Report Bug</a>
     ·
