@@ -1,9 +1,10 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import TodoItem from './TodoItem';
-import { TodosContext } from './TodosContext';
+import { useSelector } from 'react-redux';
+import { getAllTodos } from './todosSlice';
 
 const TodoList = () => {
-  const { todos } = useContext(TodosContext);
+  const todos = useSelector(getAllTodos);
 
   const [filter, setFilter] = useState('All');//States: All|Active|Completed
 

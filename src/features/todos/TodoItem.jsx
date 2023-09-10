@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
-import { TodosContext } from './TodosContext';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { editTodo, removeTodo, toggleTodoStatus } from './todosSlice';
 
 const EditItem = ({ handleEdit, oldTitle }) => {
   const [title, setTitle] = useState(oldTitle);
@@ -27,11 +28,12 @@ const EditItem = ({ handleEdit, oldTitle }) => {
 };
 
 const TodoItem = ({ todo }) => {
-  const { toggleStatus, removeTodo, editTodo } = useContext(TodosContext);
+  const dispatch = useDispatch();
+
   const [editMode, setEditMode] = useState(false);
 
   const handleEdit = (title) => {
-    editTodo(todo.id, title);
+    dispatch(editTodo(todo.id, title));
     setEditMode(!editMode);
   };
 
@@ -40,7 +42,7 @@ const TodoItem = ({ todo }) => {
   return (
     <li className='border-2 border-gray-500 rounded-e flex flex-row justify-between bg-cyan-100 dark:bg-slate-700 '>
       <label className='w-1/5 border-r-2 border-gray-500 flex justify-center cursor-pointer'>
-        <input type='checkbox' checked={todo.status} onChange={() => toggleStatus(todo.id)} className='appearance-none w-8 h-8 border-4 border-gray-500 checked:bg-gray-500 dark:border-white dark:checked:bg-white rounded-full my-auto cursor-pointer'/>
+        <input type='checkbox' checked={todo.status} onChange={() => dispatch(toggleTodoStatus(todo.id))} className='appearance-none w-8 h-8 border-4 border-gray-500 checked:bg-gray-500 dark:border-white dark:checked:bg-white rounded-full my-auto cursor-pointer'/>
       </label>
       <div className='self-center w-3/5'> 
         {todoDiv}
@@ -48,7 +50,7 @@ const TodoItem = ({ todo }) => {
       <div className='flex flex-col border-l-2 border-gray-500 w-1/3'>
         <button className={`p-1.5 text-white lg:text-lg ${editMode?'bg-blue-900 hover:bg-blue-700 focus-visible:bg-blue-700':'bg-orange-700 hover:bg-orange-900 focus-visible:bg-orange-900'}`} onClick={() => setEditMode(!editMode)}>{editMode?'Cancel':'Edit'}</button>
         <hr className='border-3 border-gray-500'/>
-        <button className='p-1.5 text-white lg:text-lg bg-red-700 hover:bg-red-900 focus-visible:bg-red-900' onClick={() => removeTodo(todo.id)}>Delete</button>
+        <button className='p-1.5 text-white lg:text-lg bg-red-700 hover:bg-red-900 focus-visible:bg-red-900' onClick={() => dispatch(removeTodo(todo.id))}>Delete</button>
       </div>
     </li>
   );

@@ -1,8 +1,9 @@
-import { useContext, useState } from 'react';
-import { TodosContext } from './TodosContext';
+import { useState } from 'react';
+import { useDispatch} from 'react-redux';
+import { addNewTodo } from './todosSlice';
 
 const TodoForm = () => {
-  const { addTodo } = useContext(TodosContext);
+  const dispatch = useDispatch();
   const [newTodo, setNewTodo] = useState('');
 
   const handleNewTodo = (e) => {
@@ -11,7 +12,7 @@ const TodoForm = () => {
 
   const submitNewTodo = (e) => {
     e.preventDefault();
-    addTodo(newTodo);
+    dispatch(addNewTodo(newTodo));
     setNewTodo('');
   };
 
