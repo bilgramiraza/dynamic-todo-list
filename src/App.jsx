@@ -1,8 +1,8 @@
 import { useState } from "react";
-import TodoForm from "./components/TodoForm";
-import TodoList from "./components/TodoList";
-import { TodosProvider } from "./components/TodosContext";
-import Header from "./components/Header";
+import TodoForm from "./features/todos/TodoForm";
+import TodoList from "./features/todos/TodoList";
+import { TodosProvider } from "./features/todos/TodosContext";
+import Header from "./features/header/Header";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
