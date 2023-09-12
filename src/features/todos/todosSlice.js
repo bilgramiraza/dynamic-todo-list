@@ -1,5 +1,6 @@
-import { createEntityAdapter, createSlice } from "@reduxjs/toolkit"
+import { createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit"
 import { nanoid } from "nanoid";
+import { StatusFilters } from "../filters/filtersSlice";
 
 const todosAdaptor = createEntityAdapter();
 
@@ -58,3 +59,28 @@ export const {
 } = todoSlice.actions;
 
 export const { selectAll:getAllTodos, selectById:selectTodoById } = todosAdaptor.getSelectors(state=> state.todos);
+
+export const getAllTodoIds = createSelector(
+  getAllTodos,
+  todos => todos.map(todo => todo.id),
+);
+
+export const getFilteredTodos = createSelector(
+  getAllTodos,
+  state => state.filters,
+  (todos, status) => {
+    const showAllTodos = status === StatusFilters.All;
+    if(showAllTodos)  return todos;
+
+    const showAllActiveTodos = status === StatusFilters.Active;
+
+    return todos.filter(todo => {
+      return todo.status === showAllActiveTodos;
+    });
+  },
+);
+
+export const getFilteredTodoIds = createSelector(
+  getFilteredTodos,
+  filteredTodos => filteredTodos.map(todo => todo.id),
+);
