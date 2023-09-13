@@ -20,7 +20,7 @@
     <a href="https://github.com/bilgramiraza/dynamic-todo-list"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://charming-flan-e9c0c7.netlify.app" target="_blank">View Demo</a>
+    <a href="https://dynamic-todolist.netlify.app" target="_blank">View Demo</a>
     ·
     <a href="https://github.com/bilgramiraza/dynamic-todo-list/issues">Report Bug</a>
     ·
@@ -70,6 +70,7 @@
 ### Built With
 
 * [![React][React.js]][React-url]
+* [![RTK][Redux Toolkit]][RTK-url]
 * [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
 * [![Vite][Vite]][Vite-url]
 * [![JavaScript][JavaScript]][JavaScript-url]
@@ -132,6 +133,7 @@ This is a website that helps users stay on top of their daily agenda effortlessl
 ## Roadmap
 
 - [x] Create MVP
+- [x] Moved to a Proper App State Management 
 - [ ] Allow Users to Create Groups to manage their Todos into categories
 - [ ] Add More Fields
 - [ ] Allow Users to Store Tasks on the cloud
@@ -207,6 +209,8 @@ Project Link: [https://github.com/bilgramiraza/dynamic-todo-list](https://github
 [product-screenshot]: images/screenshot1.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
+[RTK]: https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white
+[RTK-url]: https://redux-toolkit.js.org
 [Vite]: https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white
 [Vite-url]: https://vitejs.dev/
 [TailwindCSS]: https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white
