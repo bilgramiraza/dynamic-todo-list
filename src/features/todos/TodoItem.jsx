@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { editTodo, removeTodo, toggleTodoStatus } from './todosSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { editTodo, removeTodo, selectTodoById, toggleTodoStatus } from './todosSlice';
 
 const EditItem = ({ handleEdit, oldTitle }) => {
   const [title, setTitle] = useState(oldTitle);
@@ -27,8 +27,9 @@ const EditItem = ({ handleEdit, oldTitle }) => {
   );
 };
 
-const TodoItem = ({ todo }) => {
+const TodoItem = ({ todoId }) => {
   const dispatch = useDispatch();
+  const todo = useSelector(state => selectTodoById(state, todoId));
 
   const [editMode, setEditMode] = useState(false);
 
@@ -37,20 +38,26 @@ const TodoItem = ({ todo }) => {
     setEditMode(!editMode);
   };
 
-  const todoDiv = editMode ? <EditItem handleEdit={handleEdit} oldTitle={todo.title} /> : <span className='p-2 text-3xl lg:text-2xl text-black dark:text-white'>{todo.title}</span>;
+  const handleToggleStatus = () => dispatch(toggleTodoStatus(todo.id));
+  const handleDelete = () => dispatch(removeTodo(todo.id));
+  const toggleEditMode = () => setEditMode(!editMode);
+
+  const todoDiv = editMode 
+    ? <EditItem handleEdit={handleEdit} oldTitle={todo.title} /> 
+    : <span className='p-2 text-3xl lg:text-2xl text-black dark:text-white'>{todo.title}</span>;
 
   return (
     <li className='border-2 border-gray-500 rounded-e flex flex-row justify-between bg-cyan-100 dark:bg-slate-700 '>
       <label className='w-1/5 border-r-2 border-gray-500 flex justify-center cursor-pointer'>
-        <input type='checkbox' checked={todo.status} onChange={() => dispatch(toggleTodoStatus(todo.id))} className='appearance-none w-8 h-8 border-4 border-gray-500 checked:bg-gray-500 dark:border-white dark:checked:bg-white rounded-full my-auto cursor-pointer'/>
+        <input type='checkbox' checked={todo.status} onChange={handleToggleStatus} className='appearance-none w-8 h-8 border-4 border-gray-500 checked:bg-gray-500 dark:border-white dark:checked:bg-white rounded-full my-auto cursor-pointer'/>
       </label>
       <div className='self-center w-3/5'> 
         {todoDiv}
       </div>
       <div className='flex flex-col border-l-2 border-gray-500 w-1/3'>
-        <button className={`p-1.5 text-white lg:text-lg ${editMode?'bg-blue-900 hover:bg-blue-700 focus-visible:bg-blue-700':'bg-orange-700 hover:bg-orange-900 focus-visible:bg-orange-900'}`} onClick={() => setEditMode(!editMode)}>{editMode?'Cancel':'Edit'}</button>
+        <button className={`p-1.5 text-white lg:text-lg ${editMode?'bg-blue-900 hover:bg-blue-700 focus-visible:bg-blue-700':'bg-orange-700 hover:bg-orange-900 focus-visible:bg-orange-900'}`} onClick={toggleEditMode}>{editMode?'Cancel':'Edit'}</button>
         <hr className='border-3 border-gray-500'/>
-        <button className='p-1.5 text-white lg:text-lg bg-red-700 hover:bg-red-900 focus-visible:bg-red-900' onClick={() => dispatch(removeTodo(todo.id))}>Delete</button>
+        <button className='p-1.5 text-white lg:text-lg bg-red-700 hover:bg-red-900 focus-visible:bg-red-900' onClick={handleDelete}>Delete</button>
       </div>
     </li>
   );
@@ -60,7 +67,7 @@ export default TodoItem;
 
 
 TodoItem.propTypes = {
-  todo: PropTypes.object.isRequired,
+  todoId: PropTypes.string.isRequired,
 };
 
 EditItem.propTypes = {
