@@ -68,14 +68,14 @@ export const getAllTodoIds = createSelector(
 export const getFilteredTodos = createSelector(
   getAllTodos,
   state => state.filters,
-  (todos, status) => {
+  (todos, { status }) => {
     const showAllTodos = status === StatusFilters.All;
     if(showAllTodos)  return todos;
 
-    const showAllActiveTodos = status === StatusFilters.Active;
+    const showAllCompletedTodos = status === StatusFilters.Completed;
 
     return todos.filter(todo => {
-      return todo.status === showAllActiveTodos;
+      return todo.status === showAllCompletedTodos;
     });
   },
 );
