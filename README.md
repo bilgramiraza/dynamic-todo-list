@@ -70,7 +70,7 @@
 ### Built With
 
 * [![React][React.js]][React-url]
-* [![RTK][Redux-Toolkit]][RTK-url]
+* [![React-ToolKit][RTK]][RTK-url]
 * [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
 * [![Vite][Vite]][Vite-url]
 * [![JavaScript][JavaScript]][JavaScript-url]
