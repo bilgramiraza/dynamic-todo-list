@@ -1,10 +1,21 @@
-import { createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit"
 import { nanoid } from "nanoid";
 import { StatusFilters } from "../filters/filtersSlice";
 
 const todosAdaptor = createEntityAdapter();
 
-const initialState = todosAdaptor.getInitialState({});
+const initialState = todosAdaptor.getInitialState({
+  status: 'idle', //idle|loading|success|failed
+});
+
+export const fetchTodos = createAsyncThunk(
+  'todos/fetchTodos',
+  async ()=>{
+    const response = await fetch('http://localhost:3000/api/todos');
+    const todos = await response.json();
+    return todos;
+  },
+);
 
 const todoSlice = createSlice({
   name:'todos',
@@ -46,7 +57,16 @@ const todoSlice = createSlice({
       },
     },
   },
-  extraReducers:{}
+  extraReducers: builder => {
+    builder
+      .addCase(fetchTodos.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(fetchTodos.fulfilled, (state, action) => {
+        todosAdaptor.setAll(state, action.payload);
+        state.status = 'idle';
+      });
+  }
 });
 
 export default todoSlice.reducer;
