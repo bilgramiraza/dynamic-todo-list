@@ -1,5 +1,4 @@
 import { createAsyncThunk, createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit"
-import { nanoid } from "nanoid";
 import { StatusFilters } from "../filters/filtersSlice";
 
 const todosAdaptor = createEntityAdapter();
@@ -17,25 +16,27 @@ export const fetchTodos = createAsyncThunk(
   },
 );
 
+export const saveNewTodo = createAsyncThunk(
+  'todos/saveNewTodo',
+  async todo => {
+    const fetchOptions = {
+      method : 'POST',
+      headers: {
+        'Content-Type' : 'application/json',
+        'Accept': 'application/json',
+      },
+      body : JSON.stringify({ title : todo }),
+    };
+    const response = await fetch('http://localhost:3000/api/todos',fetchOptions);
+    const todos = await response.json();
+    return todos.todo;
+  },
+);
+
 const todoSlice = createSlice({
   name:'todos',
   initialState,
   reducers:{
-    addNewTodo:{
-      reducer(state,action){
-        state.entities[action.payload.id] = action.payload;
-        state.ids.push(action.payload.id);
-      },
-      prepare(title){
-        return { 
-          payload:{
-            id: nanoid(),
-            title,
-            status: false,
-          },
-        };
-      },
-    },
     removeTodo(state, action){
       delete state.entities[action.payload];
       state.ids = state.ids.filter(id => id !==action.payload);
@@ -65,6 +66,13 @@ const todoSlice = createSlice({
       .addCase(fetchTodos.fulfilled, (state, action) => {
         todosAdaptor.setAll(state, action.payload);
         state.status = 'idle';
+      })
+      .addCase(saveNewTodo.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(saveNewTodo.fulfilled, (state, action)=> {
+        todosAdaptor.addOne(state,action);
+        state.status = 'idle';
       });
   }
 });
@@ -72,7 +80,6 @@ const todoSlice = createSlice({
 export default todoSlice.reducer;
 
 export const {
-  addNewTodo,
   removeTodo,
   toggleTodoStatus,
   editTodo,

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch} from 'react-redux';
-import { addNewTodo } from './todosSlice';
+import { saveNewTodo } from './todosSlice';
 
 const TodoForm = () => {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ const TodoForm = () => {
 
   const submitNewTodo = (e) => {
     e.preventDefault();
-    dispatch(addNewTodo(newTodo));
+    dispatch(saveNewTodo(newTodo));
     setNewTodo('');
   };
 
