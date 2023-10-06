@@ -45,14 +45,22 @@ export const toggleTodoStatus = createAsyncThunk(
   },
 );
 
+export const removeTodo = createAsyncThunk(
+  'todos/removeTodo',
+  async todoId=> {
+    const fetchOptions = {
+      method : 'DELETE',
+    };
+    const response = await fetch(`http://localhost:3000/api/todos/${todoId}`,fetchOptions);
+    const todos = await response.json();
+    return todos.todo;
+  },
+);
+
 const todoSlice = createSlice({
   name:'todos',
   initialState,
   reducers:{
-    removeTodo(state, action){
-      delete state.entities[action.payload];
-      state.ids = state.ids.filter(id => id !==action.payload);
-    },
     editTodo:{
       reducer(state, action){
         state.entities[action.payload.id].title = action.payload.title;
@@ -89,6 +97,13 @@ const todoSlice = createSlice({
       .addCase(toggleTodoStatus.fulfilled, (state, action) => {
         todosAdaptor.updateOne(state, { id:action.payload.id, changes:action.payload });
         state.status = 'idle';
+      })
+      .addCase(removeTodo.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(removeTodo.fulfilled, (state, action) => {
+        todosAdaptor.removeOne(state, action.payload.id);
+        state.status = 'idle';
       });
   }
 });
@@ -96,7 +111,6 @@ const todoSlice = createSlice({
 export default todoSlice.reducer;
 
 export const {
-  removeTodo,
   editTodo,
 } = todoSlice.actions;
 
