@@ -53,9 +53,6 @@ const todoSlice = createSlice({
       delete state.entities[action.payload];
       state.ids = state.ids.filter(id => id !==action.payload);
     },
-    toggleTodoStatus(state, action){
-      state.entities[action.payload].status = !state.entities[action.payload].status;
-    },
     editTodo:{
       reducer(state, action){
         state.entities[action.payload.id].title = action.payload.title;
