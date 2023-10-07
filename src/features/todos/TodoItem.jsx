@@ -34,7 +34,7 @@ const TodoItem = ({ todoId }) => {
   const [editMode, setEditMode] = useState(false);
 
   const handleEdit = (title) => {
-    dispatch(editTodo(todo.id, title));
+    dispatch(editTodo({todoId:todo.id, title}));
     setEditMode(!editMode);
   };
 

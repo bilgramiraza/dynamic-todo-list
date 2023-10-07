@@ -45,6 +45,23 @@ export const toggleTodoStatus = createAsyncThunk(
   },
 );
 
+export const editTodo= createAsyncThunk(
+  'todos/editTodo',
+  async ({ todoId, title })=> {
+    const fetchOptions = {
+      method : 'PUT',
+      headers: {
+        'Content-Type' : 'application/json',
+        'Accept': 'application/json',
+      },
+      body : JSON.stringify({ title }),
+    };
+    const response = await fetch(`http://localhost:3000/api/todos/${todoId}`,fetchOptions);
+    const todos = await response.json();
+    return todos.todo;
+  },
+);
+
 export const removeTodo = createAsyncThunk(
   'todos/removeTodo',
   async todoId=> {
@@ -61,19 +78,6 @@ const todoSlice = createSlice({
   name:'todos',
   initialState,
   reducers:{
-    editTodo:{
-      reducer(state, action){
-        state.entities[action.payload.id].title = action.payload.title;
-      },
-      prepare(id, title){
-        return {
-          payload:{
-            id,
-            title,
-          },
-        };
-      },
-    },
   },
   extraReducers: builder => {
     builder
@@ -98,6 +102,13 @@ const todoSlice = createSlice({
         todosAdaptor.updateOne(state, { id:action.payload.id, changes:action.payload });
         state.status = 'idle';
       })
+      .addCase(editTodo.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(editTodo.fulfilled, (state, action) => {
+        todosAdaptor.updateOne(state, { id: action.payload.id, changes:action.payload });
+        state.status = 'idle';
+      })
       .addCase(removeTodo.pending, state => {
         state.status = 'loading';
       })
@@ -110,9 +121,8 @@ const todoSlice = createSlice({
 
 export default todoSlice.reducer;
 
-export const {
-  editTodo,
-} = todoSlice.actions;
+// export const {
+// } = todoSlice.actions;
 
 export const { selectAll:getAllTodos, selectById:selectTodoById } = todosAdaptor.getSelectors(state=> state.todos);
 
