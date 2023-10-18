@@ -7,7 +7,17 @@ export const apiSlice = createApi({
     fetchTodos: builder.query({
       query: () => '/api/todos',
     }),
+    saveNewTodo: builder.mutation({
+      query: todo => ({
+        url: '/api/todos',
+        method: 'POST',
+        body: todo,
+      }),
+    }),
   }),
 });
 
-export const { useFetchTodosQuery } = apiSlice;
+export const {
+  useFetchTodosQuery,
+  useSaveNewTodoMutation
+} = apiSlice;

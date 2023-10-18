@@ -12,7 +12,7 @@ const TodoForm = () => {
 
   const submitNewTodo = (e) => {
     e.preventDefault();
-    dispatch(saveNewTodo(newTodo));
+    dispatch(saveNewTodo({ title:newTodo }));
     setNewTodo('');
   };
 
