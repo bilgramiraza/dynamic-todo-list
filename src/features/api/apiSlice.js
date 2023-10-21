@@ -7,6 +7,9 @@ export const apiSlice = createApi({
     fetchTodos: builder.query({
       query: () => '/api/todos',
     }),
+    fetchTodo: builder.query({
+      query: todoId => `/api/todos/${todoId}`,
+    }),
     saveNewTodo: builder.mutation({
       query: todo => ({
         url: '/api/todos',
