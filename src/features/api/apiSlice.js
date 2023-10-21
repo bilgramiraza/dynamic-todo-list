@@ -14,10 +14,18 @@ export const apiSlice = createApi({
         body: todo,
       }),
     }),
+    editTodo: builder.mutation({
+      query: ({ todoId, title }) => ({
+        url: `/api/todos/${todoId}`,
+        method: 'PUT',
+        body: title,
+      }),
+    }),
   }),
 });
 
 export const {
   useFetchTodosQuery,
-  useSaveNewTodoMutation
+  useSaveNewTodoMutation,
+  useEditTodoMutation,
 } = apiSlice;
