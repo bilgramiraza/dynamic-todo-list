@@ -41,6 +41,7 @@ export const apiSlice = createApi({
 
 export const {
   useFetchTodosQuery,
+  useFetchTodoQuery,
   useSaveNewTodoMutation,
   useEditTodoMutation,
   useToggleTodoStatusMutation,
