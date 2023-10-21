@@ -27,6 +27,12 @@ export const apiSlice = createApi({
         method: 'PATCH',
       }),
     }),
+    removeTodo: builder.mutation({
+      query:  todoId => ({
+        url: `/api/todos/${todoId}`,
+        method: 'DELETE',
+      }),
+    }),
   }),
 });
 
