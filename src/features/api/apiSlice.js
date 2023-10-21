@@ -21,6 +21,12 @@ export const apiSlice = createApi({
         body: title,
       }),
     }),
+    toggleTodoStatus: builder.mutation({
+      query:  todoId => ({
+        url: `/api/todos/${todoId}`,
+        method: 'PATCH',
+      }),
+    }),
   }),
 });
 
@@ -28,4 +34,5 @@ export const {
   useFetchTodosQuery,
   useSaveNewTodoMutation,
   useEditTodoMutation,
+  useToggleTodoStatusMutation,
 } = apiSlice;
