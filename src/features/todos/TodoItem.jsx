@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { editTodo, removeTodo, selectTodoById, toggleTodoStatus } from './todosSlice';
+import { useEditTodoMutation, 
+  useToggleTodoStatusMutation, 
+  useRemoveTodoMutation 
+} from '../api/apiSlice';
 
 const EditItem = ({ handleEdit, oldTitle }) => {
   const [title, setTitle] = useState(oldTitle);
@@ -27,19 +29,20 @@ const EditItem = ({ handleEdit, oldTitle }) => {
   );
 };
 
-const TodoItem = ({ todoId }) => {
-  const dispatch = useDispatch();
-  const todo = useSelector(state => selectTodoById(state, todoId));
+const TodoItem = ({ todo }) => {
+  const [ editTodo ] = useEditTodoMutation();
+  const [ toggleTodoStatus ] = useToggleTodoStatusMutation();
+  const [ removeTodo ] = useRemoveTodoMutation();
 
   const [editMode, setEditMode] = useState(false);
 
   const handleEdit = (title) => {
-    dispatch(editTodo({todoId:todo.id, title}));
+    editTodo({todoId:todo.id, title});
     setEditMode(!editMode);
   };
 
-  const handleToggleStatus = () => dispatch(toggleTodoStatus(todo.id));
-  const handleDelete = () => dispatch(removeTodo(todo.id));
+  const handleToggleStatus = async () => await toggleTodoStatus(todo.id);
+  const handleDelete = () => removeTodo(todo.id);
   const toggleEditMode = () => setEditMode(!editMode);
 
   const todoDiv = editMode 
@@ -67,7 +70,7 @@ export default TodoItem;
 
 
 TodoItem.propTypes = {
-  todoId: PropTypes.string.isRequired,
+  todo: PropTypes.object.isRequired,
 };
 
 EditItem.propTypes = {

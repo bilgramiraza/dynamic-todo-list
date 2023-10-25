@@ -1,7 +1,10 @@
 import TodoItem from './TodoItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFilteredTodoIds } from './todosSlice';
+// import { getFilteredTodoIds } from './todosSlice';
 import { StatusFilters, statusFilterChanged  } from '../filters/filtersSlice';
+import { useFetchTodosQuery } from '../api/apiSlice';
+import Spinner from '../../components/Spinner';
+import { useMemo } from 'react';
 
 const FilterDiv = () => {
   const { status } = useSelector(state => state.filters);
@@ -23,7 +26,36 @@ const FilterDiv = () => {
 };
 
 const TodoList = () => {
-  const filteredTodoIds = useSelector(getFilteredTodoIds);
+  const { status } = useSelector(state => state.filters);
+
+  const { 
+    data:todos,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useFetchTodosQuery();
+
+  const filteredTodos = useMemo(()=>{
+    const showAllTodos = status === StatusFilters.All;
+    if(showAllTodos)  return todos;
+
+    const showAllCompletedTodos = status === StatusFilters.Completed;
+
+    return todos.filter(todo => {
+      return todo.status === showAllCompletedTodos;
+    });
+  },[todos, status]);
+
+  let content;
+
+  if(isLoading){
+    content = <Spinner size={'l'} />;
+  }else if(isSuccess){
+    content = filteredTodos.map((todo)=><TodoItem key={todo.id} todo={todo} />);
+  }else if(isError){
+    content = <p>{error.toString()}</p>;
+  }
 
   return (
     <section className='mb-2 mx-3 flex flex-col justify-center'>
@@ -34,7 +66,7 @@ const TodoList = () => {
         <FilterDiv />
       </div>
       <ul className='mt-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4'>
-        {filteredTodoIds.map(todoId => <TodoItem key={todoId} todoId={todoId} />)}
+        { content }
       </ul>
     </section>);
 };
