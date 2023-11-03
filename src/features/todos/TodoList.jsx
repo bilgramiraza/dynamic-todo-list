@@ -1,10 +1,10 @@
 import TodoItem from './TodoItem';
 import { useDispatch, useSelector } from 'react-redux';
-// import { getFilteredTodoIds } from './todosSlice';
 import { StatusFilters, statusFilterChanged  } from '../filters/filtersSlice';
 import { useFetchTodosQuery } from '../api/apiSlice';
 import Spinner from '../../components/Spinner';
 import { useMemo } from 'react';
+import { createSelector } from '@reduxjs/toolkit';
 
 const FilterDiv = () => {
   const { status } = useSelector(state => state.filters);
@@ -27,29 +27,39 @@ const FilterDiv = () => {
 
 const TodoList = () => {
   const { status } = useSelector(state => state.filters);
+  const filterSelector = useMemo(() => {
+    return createSelector(
+      res => res.data,
+      (_res, status)=> status,
+      (data, status) => {
+        const showAllTodos = status === StatusFilters.All;
+        if(showAllTodos) return data;
+
+        const showAllCompletedTodos = status === StatusFilters.Completed;
+
+        return data.filter(todo => {
+          return todo.status === showAllCompletedTodos;
+        });
+      }
+    )
+  },[]);
 
   const { 
-    data:todos,
-    isLoading,
+    filteredTodos,
+    isFetching,
     isSuccess,
     isError,
     error,
-  } = useFetchTodosQuery();
-
-  const filteredTodos = useMemo(()=>{
-    const showAllTodos = status === StatusFilters.All;
-    if(showAllTodos)  return todos;
-
-    const showAllCompletedTodos = status === StatusFilters.Completed;
-
-    return todos.filter(todo => {
-      return todo.status === showAllCompletedTodos;
-    });
-  },[todos, status]);
+  } = useFetchTodosQuery(undefined, {
+    selectFromResult:result => ({
+      ...result,
+      filteredTodos: filterSelector(result, status),
+    })
+  });
 
   let content;
 
-  if(isLoading){
+  if(isFetching){
     content = <Spinner size={'l'} />;
   }else if(isSuccess){
     content = filteredTodos.map((todo)=><TodoItem key={todo.id} todo={todo} />);
