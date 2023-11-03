@@ -37,7 +37,19 @@ export const apiSlice = createApi({
         url: `/api/todos/${todoId}`,
         method: 'PATCH',
       }),
-      invalidatesTags: (_result, _error, arg) => [{ type:'Todo', id:arg.todoId }],
+      async onQueryStarted(todoId, { dispatch, queryFulfilled }){
+        const patchResult = dispatch(
+          apiSlice.util.updateQueryData('fetchTodos', undefined, draft => {
+            const todo = draft.find(todo => todo.id === todoId);
+            if(todo)  todo.status = !todo.status;
+          })
+        );
+        try{
+          await queryFulfilled;
+        }catch{
+          patchResult.undo();
+        }
+      },
     }),
     removeTodo: builder.mutation({
       query:  todoId => ({

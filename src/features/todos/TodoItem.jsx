@@ -41,7 +41,7 @@ const TodoItem = ({ todo }) => {
     setEditMode(!editMode);
   };
 
-  const handleToggleStatus = async () => await toggleTodoStatus(todo.id);
+  const handleToggleStatus = () => toggleTodoStatus(todo.id);
   const handleDelete = () => removeTodo(todo.id);
   const toggleEditMode = () => setEditMode(!editMode);
 
