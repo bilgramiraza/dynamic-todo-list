@@ -28,7 +28,7 @@ export const apiSlice = createApi({
       query: ({ todoId, title }) => ({
         url: `/api/todos/${todoId}`,
         method: 'PUT',
-        body: title,
+        body: { title },
       }),
       invalidatesTags: (_result, _error, arg) => [{ type:'Todo', id:arg.todoId }],
     }),
