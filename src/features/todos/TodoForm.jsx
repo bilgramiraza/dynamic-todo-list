@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { useDispatch} from 'react-redux';
-import { saveNewTodo } from './todosSlice';
+import { useSaveNewTodoMutation } from '../api/apiSlice';
 
 const TodoForm = () => {
-  const dispatch = useDispatch();
   const [newTodo, setNewTodo] = useState('');
+  const [ saveNewTodo ] = useSaveNewTodoMutation();
 
   const handleNewTodo = (e) => {
     setNewTodo(e.target.value);
@@ -12,7 +11,7 @@ const TodoForm = () => {
 
   const submitNewTodo = (e) => {
     e.preventDefault();
-    dispatch(saveNewTodo({ title:newTodo }));
+    saveNewTodo({ title:newTodo });
     setNewTodo('');
   };
 
