@@ -15,7 +15,7 @@ export default function Spinner({ size }) {
         aria-live="polite"
         aria-busy="true"
         aria-labelledby="title-05a desc-05a"
-        className={spinnerSize[size]+" animate animate-spin absolute"}
+        className={spinnerSize[size]+" animate animate-spin"}
       >
         <title id="title-05a">Loading </title>
         <desc id="desc-05a">Loading Element/s</desc>

@@ -59,9 +59,7 @@ const TodoList = () => {
 
   let content;
 
-  if(isFetching){
-    content = <Spinner size={'l'} />;
-  }else if(isSuccess){
+  if(isSuccess){
     content = filteredTodos.map((todo)=><TodoItem key={todo.id} todo={todo} />);
   }else if(isError){
     content = <p>{error.toString()}</p>;
@@ -75,7 +73,12 @@ const TodoList = () => {
         </div>
         <FilterDiv />
       </div>
-      <ul className='mt-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4'>
+      <ul className={`mt-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 ${isFetching?'animate-pulse pointer-events-none':''}`}>
+        { isFetching && 
+        <div className='-ml-8 lg:ml-40 absolute inset-x-1/2 inset-y-1/2 lg:inset-y-1/3'>
+          <Spinner size='l'/>
+        </div>
+        }
         { content }
       </ul>
     </section>);

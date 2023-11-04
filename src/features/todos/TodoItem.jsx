@@ -52,7 +52,7 @@ const TodoItem = ({ todo }) => {
   return (
     <li className='border-2 border-gray-500 rounded-e flex flex-row justify-between bg-cyan-100 dark:bg-slate-700 '>
       <label className='w-1/5 border-r-2 border-gray-500 flex justify-center cursor-pointer'>
-        <input type='checkbox' checked={todo.status} onChange={handleToggleStatus} className='appearance-none w-8 h-8 border-4 border-gray-500 checked:bg-gray-500 dark:border-white dark:checked:bg-white rounded-full my-auto cursor-pointer'/>
+        <input type='checkbox' checked={todo.status} onChange={handleToggleStatus} className='transition-colors appearance-none w-8 h-8 hover:w-9 hover:h-9 border-4 border-gray-500 checked:bg-gray-500 dark:border-white dark:checked:bg-white rounded-full my-auto cursor-pointer'/>
       </label>
       <div className='self-center w-3/5'> 
         {todoDiv}
