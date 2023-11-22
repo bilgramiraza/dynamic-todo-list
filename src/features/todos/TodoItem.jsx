@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { editTodo, removeTodo, selectTodoById, toggleTodoStatus } from './todosSlice';
+import { useEditTodoMutation, 
+  useToggleTodoStatusMutation, 
+  useRemoveTodoMutation 
+} from '../api/apiSlice';
 
 const EditItem = ({ handleEdit, oldTitle }) => {
   const [title, setTitle] = useState(oldTitle);
@@ -27,19 +29,20 @@ const EditItem = ({ handleEdit, oldTitle }) => {
   );
 };
 
-const TodoItem = ({ todoId }) => {
-  const dispatch = useDispatch();
-  const todo = useSelector(state => selectTodoById(state, todoId));
+const TodoItem = ({ todo }) => {
+  const [ editTodo ] = useEditTodoMutation();
+  const [ toggleTodoStatus ] = useToggleTodoStatusMutation();
+  const [ removeTodo ] = useRemoveTodoMutation();
 
   const [editMode, setEditMode] = useState(false);
 
   const handleEdit = (title) => {
-    dispatch(editTodo(todo.id, title));
+    editTodo({todoId:todo.id, title});
     setEditMode(!editMode);
   };
 
-  const handleToggleStatus = () => dispatch(toggleTodoStatus(todo.id));
-  const handleDelete = () => dispatch(removeTodo(todo.id));
+  const handleToggleStatus = () => toggleTodoStatus(todo.id);
+  const handleDelete = () => removeTodo(todo.id);
   const toggleEditMode = () => setEditMode(!editMode);
 
   const todoDiv = editMode 
@@ -49,7 +52,7 @@ const TodoItem = ({ todoId }) => {
   return (
     <li className='border-2 border-gray-500 rounded-e flex flex-row justify-between bg-cyan-100 dark:bg-slate-700 '>
       <label className='w-1/5 border-r-2 border-gray-500 flex justify-center cursor-pointer'>
-        <input type='checkbox' checked={todo.status} onChange={handleToggleStatus} className='appearance-none w-8 h-8 border-4 border-gray-500 checked:bg-gray-500 dark:border-white dark:checked:bg-white rounded-full my-auto cursor-pointer'/>
+        <input type='checkbox' checked={todo.status} onChange={handleToggleStatus} className='transition-colors appearance-none w-8 h-8 hover:w-9 hover:h-9 border-4 border-gray-500 checked:bg-gray-500 dark:border-white dark:checked:bg-white rounded-full my-auto cursor-pointer'/>
       </label>
       <div className='self-center w-3/5'> 
         {todoDiv}
@@ -67,7 +70,7 @@ export default TodoItem;
 
 
 TodoItem.propTypes = {
-  todoId: PropTypes.string.isRequired,
+  todo: PropTypes.object.isRequired,
 };
 
 EditItem.propTypes = {

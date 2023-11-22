@@ -4,6 +4,9 @@ import App from './App.jsx'
 import './index.css'
 import { Provider } from 'react-redux'
 import store from './app/store'
+import { apiSlice } from './features/api/apiSlice.js'
+
+store.dispatch(apiSlice.endpoints.fetchTodos.initiate());
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

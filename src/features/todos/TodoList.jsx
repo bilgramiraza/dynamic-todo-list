@@ -1,7 +1,10 @@
 import TodoItem from './TodoItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFilteredTodoIds } from './todosSlice';
 import { StatusFilters, statusFilterChanged  } from '../filters/filtersSlice';
+import { useFetchTodosQuery } from '../api/apiSlice';
+import Spinner from '../../components/Spinner';
+import { useMemo } from 'react';
+import { createSelector } from '@reduxjs/toolkit';
 
 const FilterDiv = () => {
   const { status } = useSelector(state => state.filters);
@@ -23,7 +26,44 @@ const FilterDiv = () => {
 };
 
 const TodoList = () => {
-  const filteredTodoIds = useSelector(getFilteredTodoIds);
+  const { status } = useSelector(state => state.filters);
+  const filterSelector = useMemo(() => {
+    return createSelector(
+      res => res.data,
+      (_res, status)=> status,
+      (data, status) => {
+        const showAllTodos = status === StatusFilters.All;
+        if(showAllTodos) return data;
+
+        const showAllCompletedTodos = status === StatusFilters.Completed;
+
+        return data.filter(todo => {
+          return todo.status === showAllCompletedTodos;
+        });
+      }
+    )
+  },[]);
+
+  const { 
+    filteredTodos,
+    isFetching,
+    isSuccess,
+    isError,
+    error,
+  } = useFetchTodosQuery(undefined, {
+    selectFromResult:result => ({
+      ...result,
+      filteredTodos: filterSelector(result, status),
+    })
+  });
+
+  let content;
+
+  if(isSuccess){
+    content = filteredTodos.map((todo)=><TodoItem key={todo.id} todo={todo} />);
+  }else if(isError){
+    content = <p>{error.toString()}</p>;
+  }
 
   return (
     <section className='mb-2 mx-3 flex flex-col justify-center'>
@@ -33,8 +73,13 @@ const TodoList = () => {
         </div>
         <FilterDiv />
       </div>
-      <ul className='mt-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4'>
-        {filteredTodoIds.map(todoId => <TodoItem key={todoId} todoId={todoId} />)}
+      <ul className={`mt-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 ${isFetching?'animate-pulse pointer-events-none':''}`}>
+        { isFetching && 
+        <div className='-ml-8 lg:ml-40 absolute inset-x-1/2 inset-y-1/2 lg:inset-y-1/3'>
+          <Spinner size='l'/>
+        </div>
+        }
+        { content }
       </ul>
     </section>);
 };
